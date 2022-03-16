@@ -1,14 +1,24 @@
 package tests;
 
-import io.restassured.response.ValidatableResponse;
+import io.restassured.RestAssured;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import static helpers.CustomAllureListener.withCustomTemplates;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.is;
 
 public class DemowebshopTests {
 
+    @BeforeAll
+    static void setup() {
+        RestAssured.baseURI = "https://demoqa.com";
+        RestAssured.filters(withCustomTemplates());
+    }
+
     @Test
+    @Tag("api")
     void addToCartWithCookieTest() {
         String cardCount =
                 given()
